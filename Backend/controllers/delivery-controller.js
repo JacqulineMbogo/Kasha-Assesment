@@ -5,12 +5,18 @@ const Delivery = require('../models/delivery');
 // === Get all deliveries ===
 const getAllDeliveries = async (req, res, next) => {
   try {
-    const deliveries = await Delivery.find().populate('customer_id staff_id product_id');
+    const deliveries = await Delivery.find().populate(
+      'customer_id staff_id product_id'
+    );
     res.json({
-      deliveries: deliveries.map(delivery => delivery.toObject({ getters: true }))
+      deliveries: deliveries.map((delivery) =>
+        delivery.toObject({ getters: true })
+      ),
     });
   } catch (err) {
-    return next(new HttpError('Fetching deliveries failed, please try again later.', 500));
+    return next(
+      new HttpError('Fetching deliveries failed, please try again later.', 500)
+    );
   }
 };
 
@@ -19,13 +25,19 @@ const getDeliveryById = async (req, res, next) => {
   const deliveryId = req.params.did;
 
   try {
-    const delivery = await Delivery.findById(deliveryId).populate('customer_id staff_id product_id');
+    const delivery = await Delivery.findById(deliveryId).populate(
+      'customer_id staff_id product_id'
+    );
     if (!delivery) {
-      return next(new HttpError('Could not find a delivery for the provided ID.', 404));
+      return next(
+        new HttpError('Could not find a delivery for the provided ID.', 404)
+      );
     }
     res.json({ delivery: delivery.toObject({ getters: true }) });
   } catch (err) {
-    return next(new HttpError('Fetching delivery failed, please try again later.', 500));
+    return next(
+      new HttpError('Fetching delivery failed, please try again later.', 500)
+    );
   }
 };
 
@@ -33,7 +45,9 @@ const getDeliveryById = async (req, res, next) => {
 const createDelivery = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+    return next(
+      new HttpError('Invalid inputs passed, please check your data.', 422)
+    );
   }
 
   const {
@@ -52,7 +66,7 @@ const createDelivery = async (req, res, next) => {
     delivery_time,
     meds_returned,
     signed_by_client,
-    comments
+    comments,
   } = req.body;
 
   const newDelivery = new Delivery({
@@ -71,14 +85,16 @@ const createDelivery = async (req, res, next) => {
     delivery_time,
     meds_returned,
     signed_by_client,
-    comments
+    comments,
   });
 
   try {
     await newDelivery.save();
     res.status(201).json({ delivery: newDelivery });
   } catch (err) {
-    return next(new HttpError('Creating delivery failed, please try again.', 500));
+    return next(
+      new HttpError('Creating delivery failed, please try again.', 500)
+    );
   }
 };
 
@@ -86,7 +102,9 @@ const createDelivery = async (req, res, next) => {
 const updateDelivery = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+    return next(
+      new HttpError('Invalid inputs passed, please check your data.', 422)
+    );
   }
 
   const deliveryId = req.params.did;
@@ -98,13 +116,15 @@ const updateDelivery = async (req, res, next) => {
     delivery_time,
     meds_returned,
     signed_by_client,
-    comments
+    comments,
   } = req.body;
 
   try {
     const delivery = await Delivery.findById(deliveryId);
     if (!delivery) {
-      return next(new HttpError('Could not find delivery for the provided ID.', 404));
+      return next(
+        new HttpError('Could not find delivery for the provided ID.', 404)
+      );
     }
 
     delivery.status = status;

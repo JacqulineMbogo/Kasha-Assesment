@@ -5,6 +5,7 @@ const staffRoutes = require('./routes/staff-routes');
 const productRoutes = require('./routes/product-routes');
 const customerRoutes = require('./routes/customer-routes');
 const deliveryRoutes = require('./routes/delivery-routes');
+const excelUploadRoutes = require('./routes/excel-uploads-routes');
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/api/staff', staffRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/deliveries', deliveryRoutes);
+app.use('/api/excel-uploads', excelUploadRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
