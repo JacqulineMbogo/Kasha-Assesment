@@ -1,0 +1,6 @@
+{
+  "env": {
+    "DB_CONNECTION_STRING": "mongodb+srv://admin:admin@sandbox.0n9cihx.mongodb.net/kasha?retryWrites=true&w=majority&appName=Sandbox",
+    "JWT_KEY": "SECRET"
+  }
+}
