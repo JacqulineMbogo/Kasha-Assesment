@@ -2,6 +2,8 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const Customer = require('../models/customer');
 
+const { formatPhone } = require('../shared/utility');
+
 // === Get all Customers ===
 const getAllCustomers = async (req, res, next) => {
   try {
@@ -49,7 +51,7 @@ const createCustomer = async (req, res, next) => {
   }
 
   const {
-    full_name,
+    unique_identifier,
     primary_phone,
     alternate_phone,
     sex,
@@ -59,9 +61,9 @@ const createCustomer = async (req, res, next) => {
   } = req.body;
 
   const newCustomer = new Customer({
-    full_name,
-    primary_phone,
-    alternate_phone,
+    unique_identifier,
+    primary_phone: formatPhone(primary_phone),
+    alternate_phone: formatPhone(alternate_phone),
     sex,
     age,
     client_type,
@@ -92,7 +94,7 @@ const updateCustomer = async (req, res, next) => {
 
   const customerId = req.params.cid;
   const {
-    full_name,
+    unique_identifier,
     primary_phone,
     alternate_phone,
     sex,
@@ -109,9 +111,9 @@ const updateCustomer = async (req, res, next) => {
       );
     }
 
-    customer.full_name = full_name;
-    customer.primary_phone = primary_phone;
-    customer.alternate_phone = alternate_phone;
+    customer.unique_identifier = unique_identifier;
+    customer.primary_phone = formatPhone(primary_phone);
+    customer.alternate_phone = formatPhone(alternate_phone);
     customer.sex = sex;
     customer.age = age;
     customer.client_type = client_type;

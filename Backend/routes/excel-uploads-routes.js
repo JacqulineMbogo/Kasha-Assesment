@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 
 const excelUploadControllers = require('../controllers/excel-uploads-controller');
 const checkAuth = require('../middleware/check-auth');
+const upload = require('../middleware/file-upload');
 
 const router = express.Router();
 
@@ -19,15 +20,6 @@ router.get('/:uid', excelUploadControllers.getUploadById);
 router.get('/staff/:sid', excelUploadControllers.getUploadsByStaffId);
 
 // POST new upload log
-router.post(
-  '/',
-  [
-    check('uploaded_by').notEmpty(),
-    check('filename').notEmpty(),
-    check('valid_records').isInt({ min: 0 }),
-    check('invalid_records').isInt({ min: 0 }),
-  ],
-  excelUploadControllers.createUpload
-);
+router.post('/', upload.single('file'), excelUploadControllers.createUpload);
 
 module.exports = router;

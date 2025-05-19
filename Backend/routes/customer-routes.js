@@ -19,7 +19,7 @@ router.get('/:cid', customerControllers.getCustomerById);
 router.post(
   '/',
   [
-    check('full_name').not().isEmpty(),
+    check('unique_identifier').not().isEmpty(),
     check('primary_phone')
       .notEmpty()
       .withMessage('Phone number is required')
@@ -29,7 +29,7 @@ router.post(
       .optional()
       .matches(/^(\+254|0)[17]\d{8}$/)
       .withMessage('Invalid phone number format'),
-    check('sex').notEmpty().withMessage('Gender is required'),
+    check('sex').isIn(['MALE', 'FEMALE', 'OTHER']),
     check('age').isInt({ min: 0 }),
     check('client_type').optional(),
     check('sub_county').optional(),

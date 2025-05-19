@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const customerSchema = new Schema({
-  full_name: {
+  unique_identifier: {
     type: String,
-    required: true,
     trim: true,
   },
   primary_phone: {
@@ -17,6 +16,7 @@ const customerSchema = new Schema({
   },
   sex: {
     type: String,
+    enum: ['MALE', 'FEMALE', 'OTHER'],
     required: true,
   },
   age: {
