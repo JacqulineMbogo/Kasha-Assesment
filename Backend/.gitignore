@@ -47,3 +47,6 @@ docker-compose.override.yml
 
 # Mac system files
 .DS_Store
+
+#uploads
+uploads/

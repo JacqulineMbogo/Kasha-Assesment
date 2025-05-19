@@ -87,7 +87,6 @@ const createUpload = async (req, res, next) => {
 
   const requiredFields = [
     'facility-name-official-names',
-    'unique-identifier',
     'primary-phone-number',
     'sex',
     'client-age',
