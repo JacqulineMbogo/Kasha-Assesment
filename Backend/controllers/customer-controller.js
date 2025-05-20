@@ -60,6 +60,18 @@ const createCustomer = async (req, res, next) => {
     sub_county,
   } = req.body;
 
+  //unique identifier should be uniqur
+  const existingCustomer = await Customer.findOne({
+    unique_identifier,
+  });
+  if (existingCustomer) {
+    return next(
+      new HttpError('Customer with this unique identifier already exists.', 422)
+    );
+  }
+
+  // Check if primary phone number already exists
+
   const newCustomer = new Customer({
     unique_identifier,
     primary_phone: formatPhone(primary_phone),

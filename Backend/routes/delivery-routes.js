@@ -24,6 +24,7 @@ router.post(
     check('product_id').notEmpty(),
     check('facility_name').notEmpty(),
     check('status').isIn(['pending', 'delivered', 'failed', 'partial']),
+    check('delivery_time').isIn(['morning', 'afternoon', 'evening']),
   ],
   deliveryControllers.createDelivery
 );

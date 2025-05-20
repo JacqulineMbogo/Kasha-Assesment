@@ -32,7 +32,11 @@ const deliverySchema = new mongoose.Schema({
   preferred_location: String,
   actual_location: String,
   geolocation: String, // lat,lng or GeoJSON string
-  delivery_time: Date,
+  delivery_time: {
+    type: String,
+    enum: ['morning', 'afternoon', 'evening'],
+    required: true,
+  },
   meds_returned: Boolean,
   signed_by_client: Boolean,
   comments: String,
